@@ -18,13 +18,19 @@ import img_icon from "../Assets/loginIllustration.jpg";
 import apiService from "../services/apiService"; // Import the common apiService
 
 const LoginSignup = () => {
-  const {   register,handleSubmit, formState: { errors }, } = useForm();
+  const {   register,handleSubmit, formState: { errors },setValue } = useForm();
 
   const navigate = useNavigate(); // Initialize useNavigate
   const [openSnackbar, setOpenSnackbar] = useState(false); // State for Snackbar
   const [snackbarMessage, setSnackbarMessage] = useState(""); // Snackbar message
   const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // Severity of Snackbar
-
+  const handleUserNameChange = (event) => {
+    const value = event.target.value;
+   // Allow only alphabets by replacing anything that isn't an alphabet
+    const filteredValue = value.replace(/[^A-Za-z\s]/g, "");
+    // Update the form state (you may need to set this to your form state)
+    setValue("username", filteredValue);
+  };
   const onSubmit = async (data) => {
     console.log(data);
 
@@ -88,7 +94,10 @@ const LoginSignup = () => {
               <TextField
                 fullWidth
                 label="Username"
-                {...register("username", { required: "Username is required" })}
+                {...register("username", { 
+                  required: "Username is required" ,
+                  
+                })}
                 error={!!errors.username}
                 helperText={errors.username ? errors.username.message : ""}
                 margin="normal"
@@ -99,6 +108,8 @@ const LoginSignup = () => {
                     </InputAdornment>
                   ),
                 }}
+                autoComplete="off"
+                onChange={handleUserNameChange}
               />
 
               {/* Email Field */}
@@ -122,6 +133,7 @@ const LoginSignup = () => {
                     </InputAdornment>
                   ),
                 }}
+                autoComplete="off"
               />
 
               {/* Phone Number Field */}
@@ -147,6 +159,7 @@ const LoginSignup = () => {
                     </InputAdornment>
                   ),
                 }}
+                autoComplete="off"
               />
 
               {/* Password Field */}
@@ -154,7 +167,16 @@ const LoginSignup = () => {
                 fullWidth
                 label="Password"
                 type="password"
-                {...register("password", { required: "Password is required" })}
+                {...register("password", { required: "Password is required",
+                 minLength:{
+                  value:8,
+                  message:"Password must be at least 8 characters long"
+                 },
+                 pattern:{
+                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                  message: "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+                 },
+                 })}
                 error={!!errors.password}
                 helperText={errors.password ? errors.password.message : ""}
                 margin="normal"
@@ -165,6 +187,7 @@ const LoginSignup = () => {
                     </InputAdornment>
                   ),
                 }}
+                autoComplete="off"
               />
               <div className="forgot-password">
                 Already have an account? <Link to="/login">Login here</Link>

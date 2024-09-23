@@ -1,96 +1,56 @@
 import React from 'react';
-import { TextField, Grid, Typography, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Button } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-const FormWithFieldset = ({title,hello}) => {
+const FormWithFieldset = ({ title, children }) => {
   return (
     <form>
-      <Typography variant="h4" gutterBottom>
-       {title}
-      </Typography>
+      <Box
+        sx={{
+          position: 'relative',
+          width: '100%',
+          height: '100%', // Set height to 100% to fill the container
+          marginBottom: '20px', // Add margin if needed
+          
+        }}
+      >
+        {/* Small box with title */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '-30px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '200px',
+            height: '50px',
+            backgroundColor: 'lightblue',
+            border: '2px solid blue',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            padding: 1,
+            marginBottom:2,
+            borderRadius:2
+          }}
+        >
+          <Typography >{title}</Typography>
+        </Box>
 
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            required
-            label={hello}
-            fullWidth
-            variant="outlined"
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            label="Middle Name"
-            fullWidth
-            variant="outlined"
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            required
-            label="Last Name"
-            fullWidth
-            variant="outlined"
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            label="Mobile No"
-            fullWidth
-            variant="outlined"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            label="Date of Birth"
-            type="date"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            variant="outlined"
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            label="Email Id"
-            fullWidth
-            variant="outlined"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            label="Years of experience"
-            placeholder="If no experience, enter '0'"
-            fullWidth
-            variant="outlined"
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            label="Father's Name"
-            fullWidth
-            variant="outlined"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Gender</FormLabel>
-            <RadioGroup row name="gender" defaultValue="Male">
-              <FormControlLabel value="Male" control={<Radio />} label="Male" />
-              <FormControlLabel value="Female" control={<Radio />} label="Female" />
-              <FormControlLabel value="Transgender" control={<Radio />} label="Transgender" />
-            </RadioGroup>
-          </FormControl>
-        </Grid>
-
-        
-      </Grid>
+        {/* Large box for children */}
+        <Box
+          sx={{
+            width: '100%',
+            height: '100%', // Set to 100% to fill the container
+            backgroundColor: 'white',
+            border: '1px solid #0d6efd',
+            padding: 2, // Optional padding for children
+            marginTop: '40px', // Ensure the large box is below the small box
+            boxSizing: 'border-box', // Include padding and border in width/height
+            borderRadius:2
+          }}
+        >
+          {children}
+        </Box>
+      </Box>
     </form>
   );
 };

@@ -98,6 +98,7 @@ const Login = () => {
                     </InputAdornment>
                   ),
                 }}
+                autoComplete="off"
               />
 
               {/* Password Field */}
@@ -105,7 +106,16 @@ const Login = () => {
                 fullWidth
                 label="Password"
                 type="password"
-                {...register("password", { required: "Password is required" })}
+                {...register("password", { required: "Password is required",
+                  minLength:{
+                    value:8,
+                    message:"Password must be at least 8 characters long"
+                   },
+                   pattern:{
+                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                    message: "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+                   },
+                 })}
                 error={!!errors.password}
                 helperText={errors.password ? errors.password.message : ""}
                 margin="normal"
@@ -116,6 +126,7 @@ const Login = () => {
                     </InputAdornment>
                   ),
                 }}
+                autoComplete="off"
               />
 
               <div className="forgot-password">
